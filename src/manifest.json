@@ -1,0 +1,48 @@
+﻿{
+  "content_scripts": [
+    {
+      "js": [ "jquery.min.js", "pageaction.js" ],
+      "matches": [
+        "*://habrahabr.ru/", "*://habrahabr.ru/page*/", "*://habrahabr.ru/posts/*/", "*://habrahabr.ru/posts/*/page*/",
+        "*://itc.ua/", "*://itc.ua/page/*/", "*://itc.ua/category/*/page/*/", "*://itc.ua/formats/*/page/*/", "*://itc.ua/author/*/page/*/",
+        "*://9gag.com/*",
+        "*://my-chrome.ru/", "*://my-chrome.ru/page/*/", "*://my-chrome.ru/category/*/", "*://my-chrome.ru/category/*/page/*/",
+        "*://vk.com/*",
+        "*://ensemplix.ru/*", "*://ensemplix.ru/news/page/*/"
+      ],
+      "run_at": "document_start"
+    }, {
+      "js": [ "script.js" ],
+      "matches": [
+        "*://habrahabr.ru/", "*://habrahabr.ru/page*/", "*://habrahabr.ru/posts/*/", "*://habrahabr.ru/posts/*/page*/",
+        "*://itc.ua/", "*://itc.ua/page/*/", "*://itc.ua/category/*/page/*/", "*://itc.ua/formats/*/page/*/", "*://itc.ua/author/*/page/*/",
+        "*://9gag.com/*",
+        "*://my-chrome.ru/", "*://my-chrome.ru/page/*/", "*://my-chrome.ru/category/*/", "*://my-chrome.ru/category/*/page/*/",
+        "*://vk.com/*",
+        "*://ensemplix.ru/*", "*://ensemplix.ru/news/page/*/"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "page_action": {
+    "default_icon": {
+      "19": "icons/16.png"
+    },
+    "default_title": "Keyboard Friendly extension"
+  },
+  "background": {
+    "scripts": [ "background.js" ]
+  },
+  "icons": {
+    "256": "icons/256.png",
+    "128": "icons/128.png",
+    "48": "icons/48.png",
+    "32": "icons/32.png",
+    "16": "icons/16.png"
+  },
+  "web_accessible_resources": [ "jquery.min.js", "jquery.min.map" ],
+  "manifest_version": 2,
+  "name": "Keyboard Friendly",
+  "short_name": "Keyboard Friendly",
+  "version": "1.3.53"
+}
