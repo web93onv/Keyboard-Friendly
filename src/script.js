@@ -2,60 +2,100 @@ var config = {
   "9gag.com": {
     articles: ["article", "a", "d", "x", "z", "c", ".main-wrap"], // [css selector of article element, prev article button, next article button , up, focus, down]
     actions: [ // [button, action <click|newtab>, css selector, <outside> article element (optional) ]
-      ["e", "newtab", "a"], // open in new tab, if not - zoom, if not - play/stop
-      ["q", "click", ".no-scroll .badge-overlay-close.close-button", "outside"], // close modal window (zoom window)
-      ["q", "click", ".play"], // play/stop
-      ["a", "click", ".badge-prev-post-entry", "outside"], // prev
-      ["d", "click", ".badge-next-post-entry", "outside"], // next
-      ["w", "click", ".badge-item-vote-up"], // like
-      ["s", "click", ".badge-item-vote-down"] // dislike
+      ["e", "Open post in new tab",
+        "newtab", "a"],
+      ["q", "Close modal window (zoom window)",
+        "click", ".no-scroll .badge-overlay-close.close-button", "outside"],
+      ["q", "Play/pause (gif)",
+        "click", ".play"],
+      ["a", "Previous post",
+        "click", ".badge-prev-post-entry", "outside"],
+      ["d", "Next post",
+        "click", ".badge-next-post-entry", "outside"],
+      ["w", "Like",
+        "click", ".badge-item-vote-up"],
+      ["s", "Dislike",
+        "click", ".badge-item-vote-down"]
     ],
     indent: 46
   },
   "itc.ua": {
     articles: [".post", "a", "d", "x", "z", "c", "body"],
     actions: [
-      ["e", "newtab", "a"], // open in new tab
-      ["q", "click", ".pagination .back a", "outside"], // prev page
-      ["w", "click", ".pagination .next a", "outside"] // next page
+      ["e", "Open post in new tab",
+        "newtab", "a"],
+      ["q", "Previous page",
+        "click", ".pagination .back a", "outside"],
+      ["w", "Next page",
+        "click", ".pagination .next a", "outside"]
     ],
     indent: 5
   },
   "habrahabr.ru": {
     articles: [".post", "a", "d", "x", "z", "c", "body"],
     actions: [
-      ["e", "newtab", ".post_title"], // open in new tab
-      ["q", "click", "#previous_page", "outside"], // prev page
-      ["w", "click", "#next_page", "outside"] // next page
+      ["e", "Open post in new tab",
+        "newtab", ".post_title"],
+      ["q", "Previous page",
+        "click", "#previous_page", "outside"],
+      ["w", "Next page",
+        "click", "#next_page", "outside"]
     ],
     indent: 0
   },
   "my-chrome.ru": {
     articles: ["h2", "a", "d", "x", "z", "c", "body"],
     actions: [
-      ["e", "newtab", "a"], // open in new tab
-      ["q", "click", ".navigation .alignleft a", "outside"], // prev page (newer)
-      ["w", "click", ".navigation .alignright a", "outside"] // next page (older)
+      ["e", "Open post in new tab",
+        "newtab", "a"], // open in new tab
+      ["q", "Previous page",
+        "click", ".navigation .alignleft a", "outside"],
+      ["w", "Next page",
+        "click", ".navigation .alignright a", "outside"]
     ],
     indent: 0
   },
   "vk.com": {
     articles: [".post", "a", "d", "x", "z", "c", "body"],
     actions: [
-      ["e", "newtab", ".reply_link_wrap a"], // open in modal window
-      ["q", "click", "#wk_close_link", "outside"], // close modal window
-      ["w", "click", ".post_like_link"], // like
-      ["s", "click", ".post_share_link"] // share
+      ["e", "Open in modal window",
+        "newtab", ".reply_link_wrap a"],
+      ["q", "Close modal window",
+        "click", "#wk_close_link", "outside"],
+      ["w", "Like",
+        "click", ".post_like_link"],
+      ["s", "Share",
+        "click", ".post_share_link"]
     ],
     indent: 0
   },
   "ensemplix.ru": {
     articles: [".content_padding", "a", "d", "x", "z", "c", "#left_block"],
     actions: [
-      ["e", "newtab", ".news_title a"], // open in new tab
-      ["w", "click", "#pages span+a", "outside"] // next page (старше)
+      ["e", "Open post in new tab",
+        "newtab", ".news_title a"],
+      ["w", "Next page",
+        "click", "#pages span+a", "outside"]
     ],
     indent: 0
+  },
+  "vine.co": {
+    articles: ["div[id^=ember].post", "a", "d", "x", "z", "c"], // [css selector of article element, prev article button, next article button , up, focus, down]
+    actions: [ // [button, action <click|newtab>, css selector, <outside> article element (optional) ]
+      ["q", "Play/pause",
+        "click", "video"],
+      ["r", "Revine",
+        "click", ".post-actions .revine"],
+      ["e", "Open post in new tab",
+        "newtab", ".post-metadata .time a"],
+      ["w", "Like",
+        "click", ".post-actions .like"],
+      ["f", "Load more",
+        "click", ".pagination", "outside"],
+      ["s", "Share",
+        "click", ".post-actions .share"]
+    ],
+    indent: 45
   }
 };
 
@@ -101,24 +141,24 @@ document.addEventListener("keydown", function(e) {
     for(var i = 0; i < loaded_config.actions.length; i++) {
       if(e.keyCode == loaded_config.actions[i][0].charCodeAt(0) || e.keyCode == loaded_config.actions[i][0].toUpperCase().charCodeAt(0)) {
         var das, das2;
-        if(loaded_config.actions[i][1] === "click") {
-          if(loaded_config.actions[i][3] === "outside") {
-            das = document.querySelector(loaded_config.actions[i][2]);
+        if(loaded_config.actions[i][2] === "click") {
+          if(loaded_config.actions[i][4] === "outside") {
+            das = document.querySelector(loaded_config.actions[i][3]);
             if(das != null) {
               das.click();
               return;
             }
           } else {
-            das = articles[position].querySelector(loaded_config.actions[i][2]);
+            das = articles[position].querySelector(loaded_config.actions[i][3]);
             if(das != null) {
               das.click();
               return;
             }
           }
-        } else if(loaded_config.actions[i][1] === "newtab") {
+        } else if(loaded_config.actions[i][2] === "newtab") {
           das = articles[position];
           if(typeof das != "undefined") {
-            das = das.querySelector(loaded_config.actions[i][2]);
+            das = das.querySelector(loaded_config.actions[i][3]);
             if(das != null) {
               das2 = das.getAttribute("target");
               if(das2 === "_blank") {
